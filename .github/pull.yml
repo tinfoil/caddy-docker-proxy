@@ -1,0 +1,6 @@
+version: "1"
+rules:
+  - base: master
+    upstream: lucaslorentz:master
+    autoMerge: false
+    autoMergeHardReset: false
