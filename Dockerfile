@@ -1,5 +1,21 @@
+FROM golang:1.12-alpine as builder
+
+RUN apk add --update --no-cache git
+
+ENV GO111MODULE=on
+
+WORKDIR /go/src/caddy/
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY main.go ./
+COPY plugin/ ./plugin/
+
+RUN go build -v
+
 FROM alpine:3.7 as alpine
-RUN apk add -U --no-cache ca-certificates
+RUN apk add --update --no-cache ca-certificates
 
 # Image starts here
 FROM scratch
@@ -11,6 +27,6 @@ ENV HOME /root
 WORKDIR /
 COPY --from=alpine /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
-COPY artifacts/binaries/linux/amd64/caddy /bin/
+COPY --from=builder /go/src/caddy/caddy-docker-proxy /bin/caddy
 
 ENTRYPOINT ["/bin/caddy"]
