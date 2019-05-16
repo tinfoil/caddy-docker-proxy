@@ -12,6 +12,7 @@ RUN go mod download
 COPY main.go ./
 COPY plugin/ ./plugin/
 
+ENV CGO_ENABLED=0
 RUN go build -v
 
 FROM alpine:3.7 as alpine
