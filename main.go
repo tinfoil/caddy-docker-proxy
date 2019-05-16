@@ -15,6 +15,7 @@ import (
 	_ "github.com/caddyserver/dnsproviders/godaddy"
 	_ "github.com/caddyserver/dnsproviders/googlecloud"
 	_ "github.com/caddyserver/dnsproviders/route53"
+	_ "github.com/caddyserver/dnsproviders/dnsmadeeasy"
 
 	// Plugins
 	_ "github.com/nicolasazrak/caddy-cache"
